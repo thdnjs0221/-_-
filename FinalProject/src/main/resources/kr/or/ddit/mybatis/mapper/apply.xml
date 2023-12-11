@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.users.dao.ApplyDAO">
+
+<!-- 이력서 이미지 -->
+<insert id="createResumeAttatch" parameterType="ResumeAttatchVO">
+<selectKey keyProperty="resattNo" resultType="String" order="BEFORE">
+select 'RATT' || LPAD(RESUMEATT_SEQ.NEXTVAL, 4, '0') from dual
+
+</selectKey>
+INSERT INTO resume_attatch (
+    resatt_no,
+    resume_title,
+    resatt_originalnm,
+    resatt_savename,
+    resatt_filesize,
+    resatt_mime
+) VALUES (
+      #{resattNo}
+	, #{resumeTitle,jdbcType=VARCHAR}
+	, #{resattOriginalnm,jdbcType=VARCHAR}
+	, #{resattSavename,jdbcType=VARCHAR}
+	, #{resattFilesize,jdbcType=NUMERIC}
+	, #{resattMime,jdbcType=VARCHAR}
+)
+
+</insert>
+
+<!-- 지원  apply테이블 -->
+<insert id="createApply" parameterType="ApplyVO">
+<selectKey  keyProperty="aplNo" resultType="String" order="BEFORE">
+SELECT 'apl' || LPAD(APPLY_SEQ.NEXTVAL, 5, '0') AS generated_id FROM dual
+
+</selectKey>
+
+INSERT INTO apply (
+    apl_no,
+    rcrt_no,
+    users_id,
+  	resatt_no
+) VALUES (
+	  #{aplNo}
+	, #{rcrtNo,jdbcType=VARCHAR}
+	, #{usersId,jdbcType=VARCHAR}
+    , #{resattNo,jdbcType=VARCHAR}
+)
+
+</insert>
+
+<insert id="creatAprocedure" parameterType="AProcedureVO">
+
+INSERT INTO a_procedure (
+    apl_no,
+    rcrt_no,
+    rproc_order,
+    aproc_date
+) VALUES (
+      #{aplNo,jdbcType=VARCHAR}
+	, #{rcrtNo,jdbcType=VARCHAR}
+	, #{rprocOrder,jdbcType=NUMERIC}
+	, sysdate
+)
+
+</insert>
+
+<!-- 지원시 자신의 이력서 리스트! 이력서 테이블 -->
+<select id="resumeList" resultType="ResumeVO" parameterType="string">
+SELECT
+    resume_no,
+    users_id,
+    resume_title,
+    resume_portfolio,
+    resume_open_status
+FROM
+    resume
+WHERE users_id=#{usersId}
+
+</select>
+
+<!-- 채용공고 중복지원 막기 -->
+<select id="selectCheckApply" resultType="int" parameterType="ApplyVO">
+SELECT
+   count(*)
+FROM
+    apply
+WHERE users_id =#{usersId,jdbcType=VARCHAR} and rcrt_no = #{rcrtNo,jdbcType=VARCHAR}
+</select>
+
+<!-- 이력서 점수 테이블 insert -->
+<insert id="createResumeScore" parameterType="ResumeScoreVO">
+INSERT INTO resume_score (
+    rcrt_no,
+    rproc_order,
+    apl_no
+    
+) VALUES (
+ #{rcrtNo}
+, #{rprocOrder}
+, #{aplNo}
+  
+)
+
+</insert>
+
+
+
+
+</mapper>

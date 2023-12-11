@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<mvc:view-controller path="/index.do" view-name="index/index" />
+	<mvc:view-controller path="/indexCompany.do" view-name="index/indexCompany" />
+	<mvc:view-controller path="/indexAdmin.do" view-name="index/indexAdmin" />
+	<mvc:view-controller path="/userRegistration.do" view-name="/userRegistration" />
+    <mvc:view-controller path="/companyRegistration.do" view-name="/companyRegistration" />
+	
+	<!-- 	사용자 -->
+<!-- 	<mvc:view-controller path="/login.do" view-name="users/auth/login" /> -->
+	<mvc:view-controller path="/userJoin.do" view-name="users/auth/userJoin" />
+	<mvc:view-controller path="/companyJoin.do" view-name="users/auth/companyJoin" />
+	<mvc:view-controller path="/idFind.do" view-name="users/auth/idFind" />
+	<mvc:view-controller path="/pwFind.do" view-name="users/auth/pwFind" />
+	
+	<mvc:view-controller path="/recruitRegionList.do" view-name="users/recruit/recruitRegionList" />
+	<mvc:view-controller path="/recruitJobList.do" view-name="users/recruit/recruitJobList" />
+	<mvc:view-controller path="/recruitTop100List.do" view-name="users/recruit/recruitTop100List" />
+	<mvc:view-controller path="/recruitDetail.do" view-name="users/recruit/recruitDetail" />
+	<mvc:view-controller path="/test.do" view-name="users/recruit/test" />
+	
+	
+<!-- 	기업 -->
+	<mvc:view-controller path="/recruitForm.do" view-name="company/recruit/recruitForm" />
+	
+	
+	<mvc:view-controller path="/test.do" view-name="users/test" />
+	
+	
+	
+</beans>
